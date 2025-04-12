@@ -4,12 +4,22 @@ import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import DisplayTechIcons from "./DisplayTechIcons";
-import {getRandomInterviewCover} from "@/lib/utils";
+import {cn,getRandomInterviewCover} from "@/lib/utils";
 
 const InterviewCard = ({interviewId, userId, role, type, techstack, createdAt} : InterviewCardProps) => {
-    const feedback = null as Feedback || null;
+    const feedback: Feedback | null = null;
+
     const normalizedType = /mix/gi.test(type) ? 'Mixed' : type;
+
+    const badgeColor =
+        {
+            Behavioral: "bg-light-400",
+            Mixed: "bg-light-600",
+            Technical: "bg-light-800",
+        }[normalizedType] || "bg-light-600";
+
     const formattedDate = dayjs(feedback?.createdAt || createdAt || Date.now()).format('DD-MM-YYYY');
+
     return (
         <div className="card-border w-[360px] max-sm:w-full min-h-96">
             <div className="card-interview">
